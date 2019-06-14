@@ -16,6 +16,7 @@ test_data = to_dataFrame(config.test_file_path)
 list_sentences_train = train_data["application_text"].fillna(config.NAN_WORD).values
 list_sentences_test = test_data["application_text"].fillna(config.NAN_WORD).values
 y_train = train_data['Class'].values
+y_test = test_data['Class'].values
 
 
 print("Tokenizing sentences in train set...")
@@ -66,7 +67,7 @@ get_model_func = lambda: get_model(
 
 
 print("Starting to train models...")
-models = train_folds(X_train, y_train, X_test, config.fold_count, config.batch_size, get_model_func)
+models = train_folds(X_train, y_train, X_test, y_test, config.fold_count, config.batch_size, get_model_func)
 
 
 base = "C:/Users/chara/Desktop/UvA/project/predictions/"

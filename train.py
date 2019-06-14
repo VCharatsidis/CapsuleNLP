@@ -17,41 +17,18 @@ dropout_p = 0.3
 rate_drop_dense = 0.3
 
 
-def train_folds(X, y, X_test, fold_count, batch_size, get_model_func):
+def train_folds(X, y, X_test, y_test, fold_count, batch_size, get_model_func):
     print("="*75)
-    fold_size = len(X) // fold_count
-    models = []
-    result_path = "predictions"
-    if not os.path.exists(result_path):
-        os.mkdir(result_path)
-    for fold_id in range(0, fold_count):
-        fold_start = fold_size * fold_id
-        fold_end = fold_start + fold_size
+    fold_size = len(X)
 
-        if fold_id == fold_size - 1:
-            fold_end = len(X)
-
-        train_x = np.concatenate([X[:fold_start], X[fold_end:]])
-        train_y = np.concatenate([y[:fold_start], y[fold_end:]])
-
-        val_x = np.array(X[fold_start:fold_end])
-        val_y = np.array(y[fold_start:fold_end])
-
-        model = _train_model(get_model_func(), batch_size, train_x, train_y, val_x, val_y)
-        train_predicts_path = os.path.join(result_path, "train_predicts{0}.npy".format(fold_id))
-        test_predicts_path = os.path.join(result_path, "test_predicts{0}.npy".format(fold_id))
-        train_predicts = model.predict(X, batch_size=512, verbose=1)
-        test_predicts = model.predict(X_test, batch_size=512, verbose=1)
-        np.save(train_predicts_path, train_predicts)
-        np.save(test_predicts_path, test_predicts)
-
-    return models
+    model = _train_model(get_model_func(), batch_size, X, y, X_test, y_test)
+    return model
 
 
 def _train_model(model, batch_size, train_x, train_y, val_x, val_y):
     num_labels = 6
     #num_labels = train_y.shape[1]
-    patience = 5
+    patience = 7
     best_loss = -1
     best_weights = None
     best_epoch = 0
@@ -73,9 +50,7 @@ def _train_model(model, batch_size, train_x, train_y, val_x, val_y):
         model.fit(train_x, train_y, batch_size=batch_size, epochs=1)
         y_pred = model.predict(val_x, batch_size=batch_size)
 
-        # m = 6
-        # log_likelihood = -np.log(y_pred[range(m), val_y])
-        # total_loss = np.sum(log_likelihood) / m
+        # Cross Entropy Loss
         total_loss = 0
         for j in range(num_labels):
             loss = log_loss(val_y[:, j], y_pred[:, j])
