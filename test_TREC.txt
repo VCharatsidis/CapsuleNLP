@@ -1,3 +1,4 @@
+DESC:reason Does eclipse affect global warming ?
 NUM:dist How far is it from Denver to Aspen ?
 LOC:city What county is Modesto , California in ?
 HUM:desc Who was Galileo ?

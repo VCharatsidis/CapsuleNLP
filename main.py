@@ -2,7 +2,7 @@ import pandas as pd
 import config
 import numpy as np
 from nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
-from train import get_model, train_folds
+from train import get_model, train_model
 from scipy.stats import rankdata
 from create_dataframe import to_dataFrame
 
@@ -66,26 +66,6 @@ get_model_func = lambda: get_model(
     config.dense_size)
 
 
-print("Starting to train models...")
-models = train_folds(X_train, y_train, X_test, y_test, config.fold_count, config.batch_size, get_model_func)
+print("Starting to train model...")
+model = train_model(get_model_func(), config.batch_size, X_train, y_train, X_test, y_test)
 
-
-base = "C:/Users/chara/Desktop/UvA/project/predictions/"
-predict_list = []
-for j in range(10):
-    predict_list.append(np.load(base + "predictions_001/test_predicts%d.npy" % j))
-
-print("Rank averaging on ", len(predict_list), " files")
-predcitions = np.zeros_like(predict_list[0])
-for predict in predict_list:
-    predcitions = np.add(predcitions.flatten(), rankdata(predict) / predcitions.shape[0])
-predcitions /= len(predict_list)
-
-
-
-LABELS = ['DESC', 'ENTY', 'ABBR', 'HUM', 'NUM', 'LOC']
-
-#LABELS = ["project_is_approved"]
-# submission = pd.read_csv('../input/donorschoose-application-screening/sample_submission.csv')
-# submission[LABELS] = predcitions
-# submission.to_csv('submission.csv', index=False)

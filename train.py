@@ -17,23 +17,15 @@ dropout_p = 0.3
 rate_drop_dense = 0.3
 
 
-def train_folds(X, y, X_test, y_test, fold_count, batch_size, get_model_func):
-    print("="*75)
-    fold_size = len(X)
-
-    model = _train_model(get_model_func(), batch_size, X, y, X_test, y_test)
-    return model
-
-
-def _train_model(model, batch_size, train_x, train_y, val_x, val_y):
-    num_labels = 6
-    #num_labels = train_y.shape[1]
-    patience = 7
+def train_model(model, batch_size, train_x, train_y, val_x, val_y):
+    patience = 30
     best_loss = -1
     best_weights = None
     best_epoch = 0
 
     onehot_encoded = []
+    numeric_val_y = val_y
+    print(numeric_val_y.shape)
     for value in val_y:
         letter = [0 for _ in range(6)]
         letter[int(value)] = 1
@@ -41,14 +33,20 @@ def _train_model(model, batch_size, train_x, train_y, val_x, val_y):
 
     val_y = np.array(onehot_encoded)
 
-    print(val_y.shape)
-    print(val_y[0])
+    num_labels = val_y.shape[1]
 
     current_epoch = 0
 
     while True:
         model.fit(train_x, train_y, batch_size=batch_size, epochs=1)
         y_pred = model.predict(val_x, batch_size=batch_size)
+
+        preds = np.argmax(y_pred, 1)
+        #print(preds)
+        #print(numeric_val_y)
+        result = preds == numeric_val_y
+        sum = np.sum(result)
+        accuracy = sum / float(val_y.shape[0])
 
         # Cross Entropy Loss
         total_loss = 0
@@ -58,7 +56,7 @@ def _train_model(model, batch_size, train_x, train_y, val_x, val_y):
 
         total_loss /= num_labels
 
-        print("Epoch {0} loss {1} best_loss {2}".format(current_epoch, total_loss, best_loss))
+        print("Epoch: {0} loss: {1} best_loss: {2} validation accuracy: {3}".format(current_epoch, total_loss, best_loss, accuracy))
 
         current_epoch += 1
         if total_loss < best_loss or best_loss == -1:
