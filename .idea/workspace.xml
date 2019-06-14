@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="06cfe08a-afa1-48cf-ab47-e38189cb6cea" name="Default Changelist" comment="" />
+    <list default="true" id="06cfe08a-afa1-48cf-ab47-e38189cb6cea" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/create_dataframe.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/embeddings_small.vec" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_TREC.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/train_TREC.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/predictions/test_predicts0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/predictions/test_predicts0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/predictions/test_predicts1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/predictions/test_predicts1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/predictions/train_predicts0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/predictions/train_predicts0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/predictions/train_predicts1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/predictions/train_predicts1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -9,27 +23,26 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nlp_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="61" selection-start-line="61" selection-end-line="61" />
-              <folding>
-                <element signature="e#1#12#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="34">
+              <caret line="25" column="23" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/embeddings_small.vec">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Capsule.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="905">
-              <caret line="65" selection-start-line="65" selection-end-line="65" />
-              <folding>
-                <element signature="e#1#31#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="221">
+              <caret line="57" selection-start-line="57" selection-end-line="57" />
             </state>
           </provider>
         </entry>
@@ -37,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/engine/training.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2822">
-              <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
+            <state relative-caret-position="165">
+              <caret line="1038" selection-start-line="1038" selection-end-line="1038" />
             </state>
           </provider>
         </entry>
@@ -46,8 +59,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-30">
-              <caret line="71" selection-start-line="71" selection-end-line="71" />
+            <state relative-caret-position="182">
+              <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -55,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
+            <state relative-caret-position="306">
+              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -67,8 +80,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="25" column="50" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="57" />
+            <state relative-caret-position="165">
+              <caret line="68" selection-start-line="68" selection-end-line="68" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -77,10 +90,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/Lib/encodings/cp1252.py">
+        <entry file="file://$PROJECT_DIR$/train_TREC.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test_TREC.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/create_dataframe.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="22" selection-start-line="22" selection-end-line="22" />
+            <state relative-caret-position="425">
+              <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -94,23 +120,29 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/train.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Capsule.py" />
-        <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/nlp_utils.py" />
+        <option value="$PROJECT_DIR$/comma_separate.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/create_dataframe.py" />
+        <option value="$PROJECT_DIR$/train.py" />
+        <option value="$PROJECT_DIR$/config.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1128" />
-    <option name="y" value="11" />
+    <option name="x" value="1633" />
+    <option name="y" value="20" />
     <option name="width" value="1451" />
     <option name="height" value="948" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -131,7 +163,14 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\chara\PycharmProjects\CapsuleSentence" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -146,6 +185,48 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.main">
+    <configuration name="comma_separate" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CapsuleSentence" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\chara\PycharmProjects\CapsuleSentence\create_dataframe.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="create_dataframe" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CapsuleSentence" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/create_dataframe.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CapsuleSentence" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -191,6 +272,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.create_dataframe" />
+        <item itemvalue="Python.comma_separate" />
         <item itemvalue="Python.train" />
       </list>
     </recent_temporary>
@@ -209,45 +292,31 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1128" y="11" width="1451" height="948" extended-state="0" />
+    <frame x="1633" y="20" width="1451" height="948" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24982001" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25701943" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3296433" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3296433" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="R Packages" />
-      <window_info anchor="right" id="R Graphics" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="R Graphics" order="3" />
+      <window_info anchor="right" id="R Packages" order="4" />
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/engine/training.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2822">
-          <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Anaconda3/Lib/encodings/cp1252.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Desktop/UvA/project/predictions/predictions_002/test_predicts0.npy">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -265,50 +334,112 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/encodings/cp1252.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/pandas/io/parsers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="1138" selection-start-line="1138" selection-end-line="1138" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/pandas/core/frame.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="434" selection-start-line="434" selection-end-line="434" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/sklearn/metrics/classification.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="71">
+          <caret line="2054" column="4" selection-start-line="2054" selection-start-column="4" selection-end-line="2054" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/callbacks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="78" selection-start-line="78" selection-end-line="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/engine/training_arrays.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="216" selection-start-line="216" selection-end-line="216" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/engine/training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="1038" selection-start-line="1038" selection-end-line="1038" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/create_dataframe.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-30">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
+        <state relative-caret-position="182">
+          <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Capsule.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="905">
-          <caret line="65" selection-start-line="65" selection-end-line="65" />
-          <folding>
-            <element signature="e#1#31#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="221">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" column="50" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="57" />
+        <state relative-caret-position="165">
+          <caret line="68" selection-start-line="68" selection-end-line="68" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/train_TREC.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_TREC.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/embeddings_small.vec">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/nlp_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="61" selection-start-line="61" selection-end-line="61" />
-          <folding>
-            <element signature="e#1#12#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="34">
+          <caret line="25" column="23" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
         </state>
       </provider>
     </entry>

@@ -49,11 +49,23 @@ def train_folds(X, y, X_test, fold_count, batch_size, get_model_func):
 
 
 def _train_model(model, batch_size, train_x, train_y, val_x, val_y):
-    num_labels = train_y.shape[1]
+    num_labels = 6
+    #num_labels = train_y.shape[1]
     patience = 5
     best_loss = -1
     best_weights = None
     best_epoch = 0
+
+    onehot_encoded = []
+    for value in val_y:
+        letter = [0 for _ in range(6)]
+        letter[int(value)] = 1
+        onehot_encoded.append(letter)
+
+    val_y = np.array(onehot_encoded)
+
+    print(val_y.shape)
+    print(val_y[0])
 
     current_epoch = 0
 
@@ -61,6 +73,9 @@ def _train_model(model, batch_size, train_x, train_y, val_x, val_y):
         model.fit(train_x, train_y, batch_size=batch_size, epochs=1)
         y_pred = model.predict(val_x, batch_size=batch_size)
 
+        # m = 6
+        # log_likelihood = -np.log(y_pred[range(m), val_y])
+        # total_loss = np.sum(log_likelihood) / m
         total_loss = 0
         for j in range(num_labels):
             loss = log_loss(val_y[:, j], y_pred[:, j])
@@ -99,10 +114,10 @@ def get_model(embedding_matrix, sequence_length, dropout_rate, recurrent_units, 
 
     capsule = Flatten()(capsule)
     capsule = Dropout(dropout_p)(capsule)
-    output = Dense(1, activation='sigmoid')(capsule)
+    output = Dense(6, activation='softmax')(capsule)
     model = Model(inputs=input1, outputs=output)
     model.compile(
-        loss='binary_crossentropy',
+        loss='sparse_categorical_crossentropy',
         optimizer='adam',
         metrics=['accuracy'])
 

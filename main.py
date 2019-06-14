@@ -4,14 +4,18 @@ import numpy as np
 from nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
 from train import get_model, train_folds
 from scipy.stats import rankdata
+from create_dataframe import to_dataFrame
 
 # Load data
 print("Loading data...")
-train_data = pd.read_csv(config.train_file_path)
-test_data = pd.read_csv(config.test_file_path)
+# train_data = pd.read_csv(config.train_file_path)
+# test_data = pd.read_csv(config.test_file_path)
+train_data = to_dataFrame(config.train_file_path)
+test_data = to_dataFrame(config.test_file_path)
+
 list_sentences_train = train_data["application_text"].fillna(config.NAN_WORD).values
 list_sentences_test = test_data["application_text"].fillna(config.NAN_WORD).values
-y_train = train_data[config.CLASSES].values
+y_train = train_data['Class'].values
 
 
 print("Tokenizing sentences in train set...")
@@ -60,18 +64,10 @@ get_model_func = lambda: get_model(
     config.recurrent_units,
     config.dense_size)
 
-# del train_data, test_data, list_sentences_train, list_sentences_test
-# del tokenized_sentences_train, tokenized_sentences_test, words_dict
-# del embedding_list, embedding_word_dict
-# del train_list_of_token_ids, test_list_of_token_ids
-# gc.collect();
 
 print("Starting to train models...")
 models = train_folds(X_train, y_train, X_test, config.fold_count, config.batch_size, get_model_func)
 
-
-
-LABELS = ["project_is_approved"]
 
 base = "C:/Users/chara/Desktop/UvA/project/predictions/"
 predict_list = []
@@ -84,6 +80,11 @@ for predict in predict_list:
     predcitions = np.add(predcitions.flatten(), rankdata(predict) / predcitions.shape[0])
 predcitions /= len(predict_list)
 
+
+
+LABELS = ['DESC', 'ENTY', 'ABBR', 'HUM', 'NUM', 'LOC']
+
+#LABELS = ["project_is_approved"]
 # submission = pd.read_csv('../input/donorschoose-application-screening/sample_submission.csv')
 # submission[LABELS] = predcitions
 # submission.to_csv('submission.csv', index=False)
