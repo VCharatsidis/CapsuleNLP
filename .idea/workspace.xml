@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="06cfe08a-afa1-48cf-ab47-e38189cb6cea" name="Default Changelist" comment="" />
+    <list default="true" id="06cfe08a-afa1-48cf-ab47-e38189cb6cea" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/models/convCaps_model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models/initial_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Capsule.py" beforeDir="false" afterPath="$PROJECT_DIR$/Capsule.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/create_dataframe.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/create_dataframe.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/embeddings_small.vec" beforeDir="false" afterPath="$PROJECT_DIR$/resources/embeddings_small.vec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nlp_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/nlp_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_TREC.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/test_TREC.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_TREC.txt" beforeDir="false" afterPath="$PROJECT_DIR$/resources/train_TREC.txt" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -10,11 +23,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Capsule.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="48" column="18" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="18" />
+            <state relative-caret-position="-1122">
+              <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -32,33 +48,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/losses.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1037">
-              <caret line="68" selection-start-line="68" selection-end-line="68" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/backend/tensorflow_backend.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="55267">
-              <caret line="3279" selection-start-line="3279" selection-end-line="3279" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/tensorflow/python/ops/nn_ops.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="43078">
-              <caret line="2564" column="4" selection-start-line="2564" selection-start-column="4" selection-end-line="2564" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/keras/engine/base_layer.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="8160">
@@ -70,10 +59,36 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="586">
-              <caret line="91" column="22" selection-start-line="91" selection-start-column="22" selection-end-line="91" selection-end-column="22" />
+            <state relative-caret-position="374">
+              <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/create_dataframe.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="425">
+              <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/convCaps_model.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/models/initial_model.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="157">
+              <caret line="28" column="40" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="40" />
+              <folding>
+                <element signature="e#5#46#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -91,8 +106,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="12" column="14" lean-forward="true" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
+            <state relative-caret-position="119">
+              <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -100,10 +115,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="65" column="22" lean-forward="true" selection-start-line="65" selection-start-column="22" selection-end-line="65" selection-end-column="22" />
+            <state relative-caret-position="-846">
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#1#14#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -127,17 +141,19 @@
         <option value="$PROJECT_DIR$/nlp_utils.py" />
         <option value="$PROJECT_DIR$/comma_separate.py" />
         <option value="$PROJECT_DIR$/create_dataframe.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/losses.py" />
-        <option value="$PROJECT_DIR$/config.py" />
-        <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/Capsule.py" />
+        <option value="$PROJECT_DIR$/initial_model.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/train.py" />
+        <option value="$PROJECT_DIR$/convCaps_model.py" />
+        <option value="$PROJECT_DIR$/config.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1109" />
-    <option name="y" value="83" />
+    <option name="x" value="1319" />
+    <option name="y" value="58" />
     <option name="width" value="1451" />
     <option name="height" value="948" />
   </component>
@@ -155,6 +171,11 @@
               <item name="CapsuleSentence" type="b2602c69:ProjectViewProjectNode" />
               <item name="CapsuleSentence" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="CapsuleSentence" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CapsuleSentence" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -167,6 +188,11 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\chara\PycharmProjects\CapsuleSentence\utils" />
+      <recent name="C:\Users\chara\PycharmProjects\CapsuleSentence\models" />
+      <recent name="C:\Users\chara\PycharmProjects\CapsuleSentence\resources" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\chara\PycharmProjects\CapsuleSentence" />
     </key>
@@ -196,7 +222,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\chara\PycharmProjects\CapsuleSentence\create_dataframe.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\chara\PycharmProjects\CapsuleSentence\utils\create_dataframe.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -217,7 +243,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/create_dataframe.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\chara\PycharmProjects\CapsuleSentence\utils\create_dataframe.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -291,7 +317,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1109" y="83" width="1451" height="948" extended-state="0" />
+    <frame x="1319" y="58" width="1451" height="948" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26061916" />
@@ -299,7 +325,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.30381304" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.39237392" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -375,29 +401,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/create_dataframe.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_TREC.txt">
+    <entry file="file://$PROJECT_DIR$/resources/train_TREC.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test_TREC.txt">
+    <entry file="file://$PROJECT_DIR$/resources/test_TREC.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/embeddings_small.vec">
+    <entry file="file://$PROJECT_DIR$/resources/embeddings_small.vec">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/predictions/test_predicts0.npy">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/nlp_utils.py">
+    <entry file="file://$PROJECT_DIR$/utils/nlp_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-221">
           <caret line="25" column="23" selection-start-line="25" selection-start-column="4" selection-end-line="25" selection-end-column="23" />
@@ -449,37 +465,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="65" column="22" lean-forward="true" selection-start-line="65" selection-start-column="22" selection-end-line="65" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="14" lean-forward="true" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="586">
-          <caret line="91" column="22" selection-start-line="91" selection-start-column="22" selection-end-line="91" selection-end-column="22" />
+        <state relative-caret-position="374">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/create_dataframe.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="1" selection-start-line="25" selection-start-column="1" selection-end-line="25" selection-end-column="1" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Capsule.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="48" column="18" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="18" />
+        <state relative-caret-position="-1122">
+          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="28" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-846">
+          <folding>
+            <element signature="e#1#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/convCaps_model.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/initial_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="157">
+          <caret line="28" column="40" selection-start-line="28" selection-start-column="36" selection-end-line="28" selection-end-column="40" />
+          <folding>
+            <element signature="e#5#46#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

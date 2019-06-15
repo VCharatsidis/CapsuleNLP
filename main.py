@@ -1,10 +1,9 @@
-import pandas as pd
 import config
 import numpy as np
-from nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
-from train import get_model, train_model
-from scipy.stats import rankdata
-from create_dataframe import to_dataFrame
+from utils.nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
+from train import train_model
+from models.initial_model import get_model
+from utils.create_dataframe import to_dataFrame
 
 # Load data
 print("Loading data...")

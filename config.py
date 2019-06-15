@@ -1,11 +1,11 @@
 
-train_file_path = "train_TREC.txt"
+train_file_path = "resources/train_TREC.txt"
 #train_file_path = "C:/Users/chara/Desktop/UvA/project/donorschooseorg-preprocessed-data/train_small.csv"
 
-test_file_path = "test_TREC.txt"
+test_file_path = "resources/test_TREC.txt"
 #test_file_path = "C:/Users/chara/Desktop/UvA/project/donorschooseorg-preprocessed-data/test_small.csv"
 
-embedding_path = "embeddings_small.vec"
+embedding_path = "resources/embeddings_small.vec"
 
 batch_size = 128
 recurrent_units = 16
