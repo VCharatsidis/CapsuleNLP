@@ -3,7 +3,7 @@ from keras.models import Model
 from keras.layers import Bidirectional, Dense, Dropout, Embedding, Flatten
 from keras.layers import GRU, Input
 
-from Capsule import Capsule
+from architectures.one_capsule_layer_architecture.Capsule import Capsule
 
 gru_len = 128
 Routings = 5
@@ -14,7 +14,7 @@ rate_drop_dense = 0.3
 number_classes = 6
 
 
-def get_model(embedding_matrix, sequence_length, dropout_rate, recurrent_units, dense_size):
+def get_model(embedding_matrix, sequence_length):
     input1 = Input(shape=(sequence_length,))
     embed_layer = Embedding(embedding_matrix.shape[0], embedding_matrix.shape[1],
                                 weights=[embedding_matrix], trainable=False)(input1)

@@ -1,4 +1,4 @@
-import config
+from architectures import config
 import pandas as pd
 
 def to_dataFrame(filepath):

@@ -1,7 +1,6 @@
 from keras.engine import Layer
 from keras.layers import K
-import squash
-import tensorflow as tf
+from architectures import squash
 
 
 class Capsule(Layer):
@@ -17,6 +16,7 @@ class Capsule(Layer):
     def build(self, input_shape):
         super(Capsule, self).build(input_shape)
         input_dim_capsule = input_shape[-1]
+
         if self.share_weights:
             self.W = self.add_weight(name='capsule_kernel',
                                      shape=(1, input_dim_capsule,

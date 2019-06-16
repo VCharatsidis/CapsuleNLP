@@ -1,6 +1,5 @@
 import tensorflow as tf
-import keras as K
-import numpy as np
+
 
 def spread_loss(labels, activations, margin):
     activations_shape = activations.get_shape().as_list()
@@ -17,11 +16,17 @@ def spread_loss(labels, activations, margin):
     return gap_mit
 
 
-
 def margin_loss(y, preds):
     y = tf.cast(y, tf.float32)
     loss = y * tf.square(tf.maximum(0., 0.9 - preds)) + \
         0.25 * (1.0 - y) * tf.square(tf.maximum(0., preds - 0.1))
     loss = tf.reduce_mean(tf.reduce_sum(loss, axis=1))
 
+    return loss
+
+
+def cross_entropy(y, preds):
+    y = tf.argmax(y, axis=1)
+    loss = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=preds, labels=y)
+    loss = tf.reduce_mean(loss)
     return loss

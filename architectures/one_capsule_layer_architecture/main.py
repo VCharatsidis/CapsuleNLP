@@ -1,8 +1,8 @@
-import config
+from architectures import config
 import numpy as np
 from utils.nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
-from train import train_model
-from models.initial_model import get_model
+from architectures.one_capsule_layer_architecture.train import train_model
+from architectures.one_capsule_layer_architecture.initial_model import get_model
 from utils.create_dataframe import to_dataFrame
 
 # Load data
@@ -59,11 +59,8 @@ X_test = np.array(test_list_of_token_ids)
 
 get_model_func = lambda: get_model(
     embedding_matrix,
-    config.sentences_length,
-    config.dropout_rate,
-    config.recurrent_units,
-    config.dense_size)
-
+    config.sentences_length
+)
 
 print("Starting to train model...")
 model = train_model(get_model_func(), config.batch_size, X_train, y_train, X_test, y_test)
