@@ -26,7 +26,7 @@ parser.add_argument('--dataset', type=str, default='resources/train_TREC.txt',
 parser.add_argument('--loss_type', type=str, default='margin_loss',
                     help='margin_loss, spread_loss, cross_entropy')
 
-parser.add_argument('--model_type', type=str, default='capsule-B',
+parser.add_argument('--model_type', type=str, default='capsule-A',
                     help='CNN, KIMCNN, capsule-A, capsule-B')
 
 parser.add_argument('--has_test', type=int, default=1,
@@ -47,42 +47,42 @@ args = parser.parse_args()
 params = vars(args)
 print(json.dumps(params, indent=2))
 
-
-def load_data(dataset):
-    train, train_label = [], []
-    dev, dev_label = [], []
-    test, test_label = [], []
-
-    f = h5py.File(dataset + '.hdf5', 'r')
-    print('loading data...')
-    print(dataset)
-    print("Keys: %s" % f.keys())
-
-    w2v = list(f['w2v'])
-    train = list(f['train'])
-    train_label = list(f['train_label'])
-    if args.use_orphan:
-        args.num_classes = max(train_label) + 1
-
-    if len(list(f['test'])) == 0:
-        args.has_test = 0
-    else:
-        args.has_test = 1
-        test = list(f['test'])
-        test_label = list(f['test_label'])
-
-    for i, v in enumerate(train):
-        if np.sum(v) == 0:
-            del (train[i])
-            del (train_label[i])
-
-    for i, v in enumerate(test):
-        if np.sum(v) == 0:
-            del (test[i])
-            del (test_label[i])
-
-    train, dev, train_label, dev_label = train_test_split(train, train_label, test_size=0.1, random_state=0)
-    return train, train_label, test, test_label, dev, dev_label, w2v
+#
+# def load_data(dataset):
+#     train, train_label = [], []
+#     dev, dev_label = [], []
+#     test, test_label = [], []
+#
+#     f = h5py.File(dataset + '.hdf5', 'r')
+#     print('loading data...')
+#     print(dataset)
+#     print("Keys: %s" % f.keys())
+#
+#     w2v = list(f['w2v'])
+#     train = list(f['train'])
+#     train_label = list(f['train_label'])
+#     if args.use_orphan:
+#         args.num_classes = max(train_label) + 1
+#
+#     if len(list(f['test'])) == 0:
+#         args.has_test = 0
+#     else:
+#         args.has_test = 1
+#         test = list(f['test'])
+#         test_label = list(f['test_label'])
+#
+#     for i, v in enumerate(train):
+#         if np.sum(v) == 0:
+#             del (train[i])
+#             del (train_label[i])
+#
+#     for i, v in enumerate(test):
+#         if np.sum(v) == 0:
+#             del (test[i])
+#             del (test_label[i])
+#
+#     train, dev, train_label, dev_label = train_test_split(train, train_label, test_size=0.1, random_state=0)
+#     return train, train_label, test, test_label, dev, dev_label, w2v
 
 
 class BatchGenerator(object):
@@ -114,82 +114,147 @@ class BatchGenerator(object):
         return batch_x, batch_y
 
 
-train, train_label, test, test_label, dev, dev_label, w2v = load_data(args.dataset)
+#train, train_label, test, test_label, dev, dev_label, w2v = load_data(args.dataset)
 
-args.vocab_size = len(w2v)
-args.vec_size = w2v[0].shape[0]
-args.max_sent = len(train[0])
+from architectures import config
+import numpy as np
+from utils.nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
+from architectures.one_capsule_layer_architecture.train import train_model
+from architectures.one_capsule_layer_architecture.initial_model import get_model
+from utils.create_dataframe import to_dataFrame
+
+# Load data
+print("Loading data...")
+train_data = to_dataFrame(config.train_file_path)
+test_data = to_dataFrame(config.test_file_path)
+
+list_sentences_train = train_data["application_text"].fillna(config.NAN_WORD).values
+list_sentences_test = test_data["application_text"].fillna(config.NAN_WORD).values
+y_train = train_data['Class'].values
+y_test = test_data['Class'].values
+
+
+print("Tokenizing sentences in train set...")
+tokenized_sentences_train, words_dict = tokenize_sentences(list_sentences_train, {})
+print("Tokenizing sentences in test set...")
+tokenized_sentences_test, words_dict = tokenize_sentences(list_sentences_test, words_dict)
+
+
+# Embedding
+words_dict[config.UNKNOWN_WORD] = len(words_dict)
+print("Loading embeddings...")
+embedding_list, embedding_word_dict = read_embedding_list(config.embedding_path)
+embedding_size = len(embedding_list[0])
+
+print("Preparing data...")
+embedding_list, embedding_word_dict = clear_embedding_list(embedding_list, embedding_word_dict, words_dict)
+
+embedding_word_dict[config.UNKNOWN_WORD] = len(embedding_word_dict)
+embedding_list.append([0.] * embedding_size)
+embedding_word_dict[config.END_WORD] = len(embedding_word_dict)
+embedding_list.append([-1.] * embedding_size)
+
+embedding_matrix = np.array(embedding_list)
+
+id_to_word = dict((id, word) for word, id in words_dict.items())
+
+train_list_of_token_ids = convert_tokens_to_ids(
+    tokenized_sentences_train,
+    id_to_word,
+    embedding_word_dict,
+    config.sentences_length)
+
+test_list_of_token_ids = convert_tokens_to_ids(
+    tokenized_sentences_test,
+    id_to_word,
+    embedding_word_dict,
+    config.sentences_length)
+
+X_train = np.array(train_list_of_token_ids)
+X_test = np.array(test_list_of_token_ids)
+
+args.vocab_size = len(words_dict.keys())
+args.vec_size = embedding_matrix[1].shape[0]
+args.max_sent = 20
+
+print("embeding matrix "+str(len(words_dict.keys())))
 print('max sent: ', args.max_sent)
 print('vocab size: ', args.vocab_size)
 print('vec size: ', args.vec_size)
-print('num_classes: ', args.num_classes)
 
-train, train_label = shuffle(train, train_label)
 
 with tf.device('/cpu:0'):
     global_step = tf.train.get_or_create_global_step()
 
-#{'DESC': 0, 'ENTY': 1, 'ABBR': 2, 'HUM': 3, 'NUM': 4, 'LOC': 5}
-label = ['-1', 'earn', 'money-fx', 'trade', 'acq', 'grain', 'interest', 'crude', 'ship']
+
+label = ['DESC', 'ENTY', 'ABBR', 'HUM', 'NUM', 'LOC']
 label = map(str, label)
-args.max_sent = 200
+args.max_sent = 20
 threshold = 0.5
 
 X = tf.placeholder(tf.int32, [args.batch_size, args.max_sent], name="input_x")
-y = tf.placeholder(tf.int64, [args.batch_size, args.num_classes], name="input_y")
+y = tf.placeholder(tf.int64, [args.batch_size, config.number_classes], name="input_y")
+
 is_training = tf.placeholder_with_default(False, shape=())
 learning_rate = tf.placeholder(dtype='float32')
 margin = tf.placeholder(shape=(), dtype='float32')
 
 l2_loss = tf.constant(0.0)
 
-w2v = np.array(w2v, dtype=np.float32)
-W1 = tf.Variable(tf.random_uniform([args.vocab_size, args.vec_size], -0.25, 0.25), name="Wemb")
+w2v = np.array(embedding_matrix, dtype=np.float32)
+W1 = tf.Variable(w2v, trainable=False)
 X_embedding = tf.nn.embedding_lookup(W1, X)
+X_embedding = X_embedding[..., tf.newaxis]
 
-if args.embedding_type == 'rand':
-    W1 = tf.Variable(tf.random_uniform([args.vocab_size, args.vec_size], -0.25, 0.25), name="Wemb")
-    X_embedding = tf.nn.embedding_lookup(W1, X)
-    X_embedding = X_embedding[..., tf.newaxis]
-if args.embedding_type == 'static':
-    W1 = tf.Variable(w2v, trainable=False)
-    X_embedding = tf.nn.embedding_lookup(W1, X)
-    X_embedding = X_embedding[..., tf.newaxis]
-if args.embedding_type == 'nonstatic':
-    W1 = tf.Variable(w2v, trainable=True)
-    X_embedding = tf.nn.embedding_lookup(W1, X)
-    X_embedding = X_embedding[..., tf.newaxis]
-if args.embedding_type == 'multi-channel':
-    W1 = tf.Variable(w2v, trainable=True)
-    W2 = tf.Variable(w2v, trainable=False)
-    X_1 = tf.nn.embedding_lookup(W1, X)
-    X_2 = tf.nn.embedding_lookup(W2, X)
-    X_1 = X_1[..., tf.newaxis]
-    X_2 = X_2[..., tf.newaxis]
-    X_embedding = tf.concat([X_1, X_2], axis=-1)
+print(X_embedding)
+
+# if args.embedding_type == 'rand':
+#     W1 = tf.Variable(tf.random_uniform([args.vocab_size, args.vec_size], -0.25, 0.25), name="Wemb")
+#     X_embedding = tf.nn.embedding_lookup(W1, X)
+#     X_embedding = X_embedding[..., tf.newaxis]
+#
+# if args.embedding_type == 'static':
+#     W1 = tf.Variable(w2v, trainable=False)
+#     X_embedding = tf.nn.embedding_lookup(W1, X)
+#     X_embedding = X_embedding[..., tf.newaxis]
+#
+# if args.embedding_type == 'nonstatic':
+#     W1 = tf.Variable(w2v, trainable=True)
+#     X_embedding = tf.nn.embedding_lookup(W1, X)
+#     X_embedding = X_embedding[..., tf.newaxis]
+#
+# if args.embedding_type == 'multi-channel':
+#     W1 = tf.Variable(w2v, trainable=True)
+#     W2 = tf.Variable(w2v, trainable=False)
+#     X_1 = tf.nn.embedding_lookup(W1, X)
+#     X_2 = tf.nn.embedding_lookup(W2, X)
+#     X_1 = X_1[..., tf.newaxis]
+#     X_2 = X_2[..., tf.newaxis]
+#     X_embedding = tf.concat([X_1, X_2], axis=-1)
 
 tf.logging.info("input dimension:{}".format(X_embedding.get_shape()))
 
-poses, activations = model_a.get_model(X_embedding, args.num_classes)
+poses, activations = model_a.get_model(X_embedding, config.number_classes)
 
-if args.model_type == 'capsule-A':
-    poses, activations = model_a.get_model(X_embedding, args.num_classes)
-if args.model_type == 'capsule-B':
-    poses, activations = model_b.get_model(X_embedding, args.num_classes)
-if args.model_type == 'CNN':
-    poses, activations = model_baseline_cnn.get_model(X_embedding, args.num_classes)
+# if args.model_type == 'capsule-A':
+#     poses, activations = model_a.get_model(X_embedding, config.number_classes)
+# if args.model_type == 'capsule-B':
+#     poses, activations = model_b.get_model(X_embedding, config.number_classes)
+# if args.model_type == 'CNN':
+#     poses, activations = model_baseline_cnn.get_model(X_embedding, args.num_classes)
 
 # if args.model_type == 'KIMCNN':
 #     poses, activations = baseline_model_kimcnn(X_embedding, args.max_sent, args.num_classes)
 
-loss = spread_loss(y, activations, margin)
+#loss = spread_loss(y, activations, margin)
+loss = cross_entropy(y, activations)
 
-if args.loss_type == 'spread_loss':
-    loss = spread_loss(y, activations, margin)
-if args.loss_type == 'margin_loss':
-    loss = margin_loss(y, activations)
-if args.loss_type == 'cross_entropy':
-    loss = cross_entropy(y, activations)
+# if args.loss_type == 'spread_loss':
+#     loss = spread_loss(y, activations, margin)
+# if args.loss_type == 'margin_loss':
+#     loss = margin_loss(y, activations)
+# if args.loss_type == 'cross_entropy':
+#     loss = cross_entropy(y, activations)
 
 y_pred = tf.argmax(activations, axis=1, name="y_proba")
 correct = tf.equal(tf.argmax(y, axis=1), y_pred, name="correct")
@@ -199,26 +264,24 @@ optimizer = tf.train.AdamOptimizer(learning_rate=learning_rate)
 training_op = optimizer.minimize(loss, name="training_op")
 gradients, variables = zip(*optimizer.compute_gradients(loss))
 
-grad_check = [tf.check_numerics(g, message='Gradient NaN Found!')
-              for g in gradients if g is not None] + [tf.check_numerics(loss, message='Loss NaN Found')]
+grad_check = [tf.check_numerics(g, message='Gradient NaN Found!') for g in gradients if g is not None] + \
+             [tf.check_numerics(loss, message='Loss NaN Found')]
 
 with tf.control_dependencies(grad_check):
     training_op = optimizer.apply_gradients(zip(gradients, variables), global_step=global_step)
 
 
 
-
-
 sess = tf.InteractiveSession()
 
 
-n_iterations_per_epoch = len(train) // args.batch_size
-n_iterations_test = len(test) // args.batch_size
-n_iterations_dev = len(dev) // args.batch_size
+n_iterations_per_epoch = len(X_train) // args.batch_size
+n_iterations_test = len(X_test) // args.batch_size
+#n_iterations_dev = len(dev) // args.batch_size
 
-mr_train = BatchGenerator(train, train_label, args.batch_size, 0)
-mr_dev = BatchGenerator(dev, dev_label, args.batch_size, 0)
-mr_test = BatchGenerator(test, test_label, args.batch_size, 0, is_shuffle=False)
+mr_train = BatchGenerator(X_train, y_train, args.batch_size, 0)
+#mr_dev = BatchGenerator(dev, dev_label, args.batch_size, 0)
+mr_test = BatchGenerator(X_test, y_test, args.batch_size, 0, is_shuffle=False)
 
 best_model = None
 best_epoch = 0
@@ -232,7 +295,7 @@ m = args.margin
 for epoch in range(args.num_epochs):
     for iteration in range(1, n_iterations_per_epoch + 1):
         X_batch, y_batch = mr_train.next()
-        y_batch = utils.to_categorical(y_batch, args.num_classes)
+        y_batch = utils.to_categorical(y_batch, config.number_classes)
         _, loss_train, probs, capsule_pose = sess.run(
             [training_op, loss, activations, poses],
             feed_dict={X: X_batch[:, :args.max_sent],
@@ -245,21 +308,21 @@ for epoch in range(args.num_epochs):
             iteration * 100 / n_iterations_per_epoch,
             loss_train),
             end="")
-    loss_vals, acc_vals = [], []
-    for iteration in range(1, n_iterations_dev + 1):
-        X_batch, y_batch = mr_dev.next()
-        y_batch = utils.to_categorical(y_batch, args.num_classes)
-        loss_val, acc_val = sess.run(
-            [loss, accuracy],
-            feed_dict={X: X_batch[:, :args.max_sent],
-                       y: y_batch,
-                       is_training: False,
-                       margin: m})
-        loss_vals.append(loss_val)
-        acc_vals.append(acc_val)
-    loss_val, acc_val = np.mean(loss_vals), np.mean(acc_vals)
-    print("\rEpoch: {}  Val accuracy: {:.1f}%  Loss: {:.4f}".format(
-        epoch + 1, acc_val * 100, loss_val))
+    # loss_vals, acc_vals = [], []
+    # for iteration in range(1, n_iterations_dev + 1):
+    #     X_batch, y_batch = mr_dev.next()
+    #     y_batch = utils.to_categorical(y_batch, args.num_classes)
+    #     loss_val, acc_val = sess.run(
+    #         [loss, accuracy],
+    #         feed_dict={X: X_batch[:, :args.max_sent],
+    #                    y: y_batch,
+    #                    is_training: False,
+    #                    margin: m})
+    #     loss_vals.append(loss_val)
+    #     acc_vals.append(acc_val)
+    # loss_val, acc_val = np.mean(loss_vals), np.mean(acc_vals)
+    # print("\rEpoch: {}  Val accuracy: {:.1f}%  Loss: {:.4f}".format(
+    #     epoch + 1, acc_val * 100, loss_val))
 
     preds_list, y_list = [], []
     for iteration in range(1, n_iterations_test + 1):
