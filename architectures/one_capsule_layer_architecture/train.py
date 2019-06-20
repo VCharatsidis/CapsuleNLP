@@ -1,17 +1,6 @@
 import numpy as np
-
+from utils.nlp_utils import numeric_to_one_hot
 number_classes = 6
-
-
-def numeric_to_one_hot(test_y):
-    onehot_encoded = []
-    for value in test_y:
-        letter = [0 for _ in range(number_classes)]
-        letter[int(value)] = 1
-        onehot_encoded.append(letter)
-
-    return np.array(onehot_encoded)
-
 
 def calc_accuracy(predictions, numeric_test_y):
     preds = np.argmax(predictions, 1)
@@ -32,7 +21,7 @@ def train_model(model, batch_size, train_x, train_y, test_x, test_y):
 
     numeric_test_y = test_y
     print(numeric_test_y.shape)
-    test_y = numeric_to_one_hot(test_y)
+    test_y = numeric_to_one_hot(test_y, number_classes)
 
     current_epoch = 0
 

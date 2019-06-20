@@ -1,15 +1,18 @@
 from __future__ import division, print_function, unicode_literals
 import argparse
-import h5py
-import numpy as np
 import tensorflow as tf
 from sklearn.metrics import precision_recall_fscore_support
 from sklearn.metrics import accuracy_score
-from sklearn.model_selection  import train_test_split
 from architectures.three_capsule_layers_architectures.losses import spread_loss, cross_entropy, margin_loss
 from architectures.three_capsule_layers_architectures.models import model_a, model_b, model_baseline_cnn
-from sklearn.utils import shuffle
 from keras import utils
+from utils.nlp_utils import numeric_to_one_hot
+from architectures.three_capsule_layers_architectures.capsule_layers import softmax
+from architectures import config
+import numpy as np
+from utils.nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
+import json
+from utils.create_dataframe import to_dataFrame
 
 tf.reset_default_graph()
 np.random.seed(0)
@@ -33,7 +36,7 @@ parser.add_argument('--has_test', type=int, default=1,
                     help='If data has test, we use it. Otherwise, we use CV on folds')
 parser.add_argument('--has_dev', type=int, default=1, help='If data has dev, we use it, otherwise we split from train')
 
-parser.add_argument('--num_epochs', type=int, default=20, help='Number of training epochs')
+parser.add_argument('--num_epochs', type=int, default=50, help='Number of training epochs')
 parser.add_argument('--batch_size', type=int, default=25, help='Batch size for training')
 
 parser.add_argument('--use_orphan', type=bool, default='True', help='Add orphan capsule or not')
@@ -41,7 +44,7 @@ parser.add_argument('--use_leaky', type=bool, default='False', help='Use leaky-s
 parser.add_argument('--learning_rate', type=float, default=0.001, help='learning rate for training')  # CNN 0.0005
 parser.add_argument('--margin', type=float, default=0.2, help='the initial value for spread loss')
 
-import json
+
 
 args = parser.parse_args()
 params = vars(args)
@@ -116,12 +119,7 @@ class BatchGenerator(object):
 
 #train, train_label, test, test_label, dev, dev_label, w2v = load_data(args.dataset)
 
-from architectures import config
-import numpy as np
-from utils.nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
-from architectures.one_capsule_layer_architecture.train import train_model
-from architectures.one_capsule_layer_architecture.initial_model import get_model
-from utils.create_dataframe import to_dataFrame
+
 
 # Load data
 print("Loading data...")
@@ -150,7 +148,7 @@ print("Preparing data...")
 embedding_list, embedding_word_dict = clear_embedding_list(embedding_list, embedding_word_dict, words_dict)
 
 embedding_word_dict[config.UNKNOWN_WORD] = len(embedding_word_dict)
-embedding_list.append([0.] * embedding_size)
+embedding_list.append(np.random.uniform(0, 1, embedding_size))
 embedding_word_dict[config.END_WORD] = len(embedding_word_dict)
 embedding_list.append([-1.] * embedding_size)
 
@@ -188,12 +186,13 @@ with tf.device('/cpu:0'):
 
 
 label = ['DESC', 'ENTY', 'ABBR', 'HUM', 'NUM', 'LOC']
+number_classes = len(label)
 label = map(str, label)
 args.max_sent = 20
 threshold = 0.5
 
 X = tf.placeholder(tf.int32, [args.batch_size, args.max_sent], name="input_x")
-y = tf.placeholder(tf.int64, [args.batch_size, config.number_classes], name="input_y")
+y = tf.placeholder(tf.int64, [args.batch_size, number_classes], name="input_y")
 
 is_training = tf.placeholder_with_default(False, shape=())
 learning_rate = tf.placeholder(dtype='float32')
@@ -234,7 +233,7 @@ print(X_embedding)
 
 tf.logging.info("input dimension:{}".format(X_embedding.get_shape()))
 
-poses, activations = model_a.get_model(X_embedding, config.number_classes)
+poses, activations = model_b.get_model(X_embedding, number_classes)
 
 # if args.model_type == 'capsule-A':
 #     poses, activations = model_a.get_model(X_embedding, config.number_classes)
@@ -247,7 +246,7 @@ poses, activations = model_a.get_model(X_embedding, config.number_classes)
 #     poses, activations = baseline_model_kimcnn(X_embedding, args.max_sent, args.num_classes)
 
 #loss = spread_loss(y, activations, margin)
-loss = cross_entropy(y, activations)
+loss = margin_loss(y, activations)
 
 # if args.loss_type == 'spread_loss':
 #     loss = spread_loss(y, activations, margin)
@@ -295,52 +294,55 @@ m = args.margin
 for epoch in range(args.num_epochs):
     for iteration in range(1, n_iterations_per_epoch + 1):
         X_batch, y_batch = mr_train.next()
-        y_batch = utils.to_categorical(y_batch, config.number_classes)
+        y_batch = utils.to_categorical(y_batch, number_classes)
+
         _, loss_train, probs, capsule_pose = sess.run(
             [training_op, loss, activations, poses],
             feed_dict={X: X_batch[:, :args.max_sent],
                        y: y_batch,
                        is_training: True,
                        learning_rate: lr,
-                       margin: m})
+                       margin: m}
+        )
+
         print("\rIteration: {}/{} ({:.1f}%)  Loss: {:.5f}".format(
             iteration, n_iterations_per_epoch,
             iteration * 100 / n_iterations_per_epoch,
             loss_train),
             end="")
-    # loss_vals, acc_vals = [], []
-    # for iteration in range(1, n_iterations_dev + 1):
-    #     X_batch, y_batch = mr_dev.next()
-    #     y_batch = utils.to_categorical(y_batch, args.num_classes)
-    #     loss_val, acc_val = sess.run(
-    #         [loss, accuracy],
-    #         feed_dict={X: X_batch[:, :args.max_sent],
-    #                    y: y_batch,
-    #                    is_training: False,
-    #                    margin: m})
-    #     loss_vals.append(loss_val)
-    #     acc_vals.append(acc_val)
-    # loss_val, acc_val = np.mean(loss_vals), np.mean(acc_vals)
-    # print("\rEpoch: {}  Val accuracy: {:.1f}%  Loss: {:.4f}".format(
-    #     epoch + 1, acc_val * 100, loss_val))
+
+    loss_vals, acc_vals = [], []
+    for iteration in range(1, n_iterations_test + 1):
+        X_batch, y_batch = mr_test.next()
+        y_batch = utils.to_categorical(y_batch, number_classes)
+
+        loss_val, acc_val = sess.run(
+            [loss, accuracy],
+            feed_dict={X: X_batch[:, :args.max_sent], y: y_batch, is_training: False, margin: m})
+
+        loss_vals.append(loss_val)
+        acc_vals.append(acc_val)
+    loss_val, acc_val = np.mean(loss_vals), np.mean(acc_vals)
+    print("\rEpoch: {}  Val accuracy: {:.1f}%  Loss: {:.4f}".format(
+        epoch + 1, acc_val * 100, loss_val))
 
     preds_list, y_list = [], []
     for iteration in range(1, n_iterations_test + 1):
         X_batch, y_batch = mr_test.next()
-        probs = sess.run([activations],
-                         feed_dict={X: X_batch[:, :args.max_sent],
-                                    is_training: False})
+        probs = sess.run([activations], feed_dict={X: X_batch[:, :args.max_sent], is_training: False})
         preds_list = preds_list + probs[0].tolist()
         y_list = y_list + y_batch.tolist()
 
     y_list = np.array(y_list)
     preds_probs = np.array(preds_list)
+
     preds_probs[np.where(preds_probs >= threshold)] = 1.0
     preds_probs[np.where(preds_probs < threshold)] = 0.0
 
-    [precision, recall, F1, support] = \
-        precision_recall_fscore_support(y_list, preds_probs, average='samples')
-    acc = accuracy_score(y_list, preds_probs)
+
+    y_one_hot = numeric_to_one_hot(y_list, number_classes)
+    [precision, recall, F1, support] =  precision_recall_fscore_support(y_one_hot, preds_probs, average='samples')
+    acc = accuracy_score(y_one_hot, preds_probs)
 
     print('\rER: %.3f' % acc, 'Precision: %.3f' % precision, 'Recall: %.3f' % recall, 'F1: %.3f' % F1)
     if args.model_type == 'CNN' or args.model_type == 'KIMCNN':

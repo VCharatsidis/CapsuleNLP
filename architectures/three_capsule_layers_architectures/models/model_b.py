@@ -7,7 +7,7 @@ import keras.backend as K
 def get_model(X, num_classes):
     poses_list = []
     for _, ngram in enumerate([3, 4, 5]):
-        with tf.variable_scope('capsule_ ' + str(ngram)):
+        with tf.variable_scope('capsule_' + str(ngram)):
             nets = wrappers._conv2d_wrapper(
                 X,
                 shape=[ngram, 300, 1, 32],

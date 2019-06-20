@@ -77,3 +77,13 @@ def convert_tokens_to_ids(tokenized_sentences, words_list, embedding_word_dict, 
         words_train.append(current_words)
 
     return words_train
+
+
+def numeric_to_one_hot(test_y, number_classes):
+    onehot_encoded = []
+    for value in test_y:
+        letter = [0 for _ in range(number_classes)]
+        letter[int(value)] = 1
+        onehot_encoded.append(letter)
+
+    return np.array(onehot_encoded)

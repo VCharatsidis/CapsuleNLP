@@ -17,4 +17,4 @@ END_WORD = "_END_"
 NAN_WORD = "_NAN_"
 
 TREC_CLASSES = {'DESC': 0, 'ENTY': 1, 'ABBR': 2, 'HUM': 3, 'NUM': 4, 'LOC': 5}
-number_classes = 6
+
