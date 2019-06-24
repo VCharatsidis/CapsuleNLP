@@ -4,7 +4,7 @@ train_file_path = "../../resources/train_TREC.txt"
 test_file_path = "../../resources/test_TREC.txt"
 #test_file_path = "C:/Users/chara/Desktop/UvA/project/donorschooseorg-preprocessed-data/test_small.csv"
 
-embedding_path = "../../resources/embeddings_small.vec"
+embedding_path = "D:/wiki-news-300d-1M/wiki-news-300d-1M.vec"
 
 batch_size = 128
 recurrent_units = 16

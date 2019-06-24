@@ -13,6 +13,8 @@ import numpy as np
 from utils.nlp_utils import tokenize_sentences, read_embedding_list, clear_embedding_list, convert_tokens_to_ids
 import json
 from utils.create_dataframe import to_dataFrame
+from matplotlib import pyplot as plt
+import capsule_layers
 
 tf.reset_default_graph()
 np.random.seed(0)
@@ -36,8 +38,8 @@ parser.add_argument('--has_test', type=int, default=1,
                     help='If data has test, we use it. Otherwise, we use CV on folds')
 parser.add_argument('--has_dev', type=int, default=1, help='If data has dev, we use it, otherwise we split from train')
 
-parser.add_argument('--num_epochs', type=int, default=50, help='Number of training epochs')
-parser.add_argument('--batch_size', type=int, default=25, help='Batch size for training')
+parser.add_argument('--num_epochs', type=int, default=120, help='Number of training epochs')
+parser.add_argument('--batch_size', type=int, default=128, help='Batch size for training')
 
 parser.add_argument('--use_orphan', type=bool, default='True', help='Add orphan capsule or not')
 parser.add_argument('--use_leaky', type=bool, default='False', help='Use leaky-softmax or not')
@@ -143,6 +145,9 @@ words_dict[config.UNKNOWN_WORD] = len(words_dict)
 print("Loading embeddings...")
 embedding_list, embedding_word_dict = read_embedding_list(config.embedding_path)
 embedding_size = len(embedding_list[0])
+print(len(embedding_list))
+print(embedding_size)
+print(embedding_word_dict)
 
 print("Preparing data...")
 embedding_list, embedding_word_dict = clear_embedding_list(embedding_list, embedding_word_dict, words_dict)
@@ -289,8 +294,20 @@ best_acc_val = 0.
 init = tf.global_variables_initializer()
 sess.run(init)
 
+def calc_accuracy(predictions, numeric_test_y):
+    preds = np.argmax(predictions, 1)
+    result = preds == numeric_test_y
+    sum = np.sum(result)
+    accuracy = sum / float(len(preds))
+
+    return accuracy
+
 lr = args.learning_rate
 m = args.margin
+accuracies = []
+precisions = []
+recalls = []
+F1s =[]
 for epoch in range(args.num_epochs):
     for iteration in range(1, n_iterations_per_epoch + 1):
         X_batch, y_batch = mr_train.next()
@@ -311,20 +328,23 @@ for epoch in range(args.num_epochs):
             loss_train),
             end="")
 
-    loss_vals, acc_vals = [], []
-    for iteration in range(1, n_iterations_test + 1):
-        X_batch, y_batch = mr_test.next()
-        y_batch = utils.to_categorical(y_batch, number_classes)
+    # loss_vals, acc_vals = [], []
+    # for iteration in range(1, n_iterations_test + 1):
+    #     X_batch, y_batch = mr_test.next()
+    #     y_batch = utils.to_categorical(y_batch, number_classes)
+    #
+    #     loss_val, acc_val = sess.run(
+    #         [loss, accuracy],
+    #         feed_dict={X: X_batch[:, :args.max_sent],
+    #                    y: y_batch,
+    #                    is_training: False,
+    #                    margin: m})
+    #
+    #     loss_vals.append(loss_val)
+    #     acc_vals.append(acc_val)
+    # loss_val, acc_val = np.mean(loss_vals), np.mean(acc_vals)
+    # print("\rEpoch: {}  Val accuracy: {:.1f}%  Loss: {:.4f}".format(epoch + 1, acc_val * 100, loss_val))
 
-        loss_val, acc_val = sess.run(
-            [loss, accuracy],
-            feed_dict={X: X_batch[:, :args.max_sent], y: y_batch, is_training: False, margin: m})
-
-        loss_vals.append(loss_val)
-        acc_vals.append(acc_val)
-    loss_val, acc_val = np.mean(loss_vals), np.mean(acc_vals)
-    print("\rEpoch: {}  Val accuracy: {:.1f}%  Loss: {:.4f}".format(
-        epoch + 1, acc_val * 100, loss_val))
 
     preds_list, y_list = [], []
     for iteration in range(1, n_iterations_test + 1):
@@ -336,17 +356,42 @@ for epoch in range(args.num_epochs):
     y_list = np.array(y_list)
     preds_probs = np.array(preds_list)
 
+    exp_max = np.exp(preds_probs - np.max(preds_probs, axis=-1, keepdims=True))
+    softmax_preds_probs = exp_max / np.sum(exp_max, axis=-1, keepdims=True)
+
+    acc = calc_accuracy(softmax_preds_probs, y_list)
+
     preds_probs[np.where(preds_probs >= threshold)] = 1.0
     preds_probs[np.where(preds_probs < threshold)] = 0.0
 
 
     y_one_hot = numeric_to_one_hot(y_list, number_classes)
-    [precision, recall, F1, support] =  precision_recall_fscore_support(y_one_hot, preds_probs, average='samples')
-    acc = accuracy_score(y_one_hot, preds_probs)
+    [precision, recall, F1, support] = precision_recall_fscore_support(y_one_hot, preds_probs, average='samples')
+    #acc = accuracy_score(y_one_hot, preds_probs)
 
-    print('\rER: %.3f' % acc, 'Precision: %.3f' % precision, 'Recall: %.3f' % recall, 'F1: %.3f' % F1)
+    accuracies.append(acc)
+    precisions.append(precision)
+    recalls.append(recall)
+    F1s.append(F1)
+
+    print('\rAccuracy: %.3f' % acc, 'Precision: %.3f' % precision, 'Recall: %.3f' % recall, 'F1: %.3f' % F1)
     if args.model_type == 'CNN' or args.model_type == 'KIMCNN':
         lr = max(1e-6, lr * 0.8)
     if args.loss_type == 'margin_loss':
         m = min(0.9, m + 0.1)
 
+
+print(max(accuracies))
+plt.figure(1)
+plt.plot(accuracies, label="Accuracies")
+plt.plot(precisions, label="Precisions")
+plt.plot(recalls, label="Recalls")
+plt.plot(F1s, label="F1s")
+plt.legend()
+
+plt.figure(2)
+
+plt.plot(accuracies)
+plt.title("Accuracies")
+
+plt.show()

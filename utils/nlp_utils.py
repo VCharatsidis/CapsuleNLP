@@ -1,8 +1,58 @@
 import nltk
 import tqdm
 import numpy as np
+import numpy as np
+import h5py
+import re
+import operator
+
+import sys
+
+
+from nltk import word_tokenize
+from nltk.corpus import reuters
+from nltk.corpus import stopwords
 
 nltk.download("punkt")
+
+
+def load_word_vector(fname, vocab):
+    model = {}
+    with open(fname) as fin:
+        for line_no, line in enumerate(fin):
+            try:
+                parts = line.strip().split(' ')
+                word, weights = parts[0], parts[1:]
+                if word in vocab:
+                    model[word] = np.array(weights, dtype=np.float32)
+            except:
+                pass
+    return model
+
+
+def load_bin_vec(fname, vocab):
+    """
+    Loads 300x1 word vecs from Google (Mikolov) word2vec
+    """
+    word_vecs = {}
+    with open(fname, "rb") as f:
+        header = f.readline()
+        vocab_size, layer1_size = map(int, header.split())
+        binary_len = np.dtype('float32').itemsize * layer1_size
+        for line in range(vocab_size):
+            word = []
+            while True:
+                ch = f.read(1)
+                if ch == ' ':
+                    word = ''.join(word)
+                    break
+                if ch != '\n':
+                    word.append(ch)
+            if word in vocab:
+               word_vecs[word] = np.frombuffer(f.read(binary_len), dtype='float32')
+            else:
+               f.read(binary_len)
+    return word_vecs
 
 
 def tokenize_sentences(sentences, words_dict):
@@ -87,3 +137,4 @@ def numeric_to_one_hot(test_y, number_classes):
         onehot_encoded.append(letter)
 
     return np.array(onehot_encoded)
+

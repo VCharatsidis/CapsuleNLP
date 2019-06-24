@@ -7,8 +7,7 @@ from utils.create_dataframe import to_dataFrame
 
 # Load data
 print("Loading data...")
-# train_data = pd.read_csv(config.train_file_path)
-# test_data = pd.read_csv(config.test_file_path)
+
 train_data = to_dataFrame(config.train_file_path)
 test_data = to_dataFrame(config.test_file_path)
 
@@ -56,9 +55,12 @@ test_list_of_token_ids = convert_tokens_to_ids(
 
 X_train = np.array(train_list_of_token_ids)
 X_test = np.array(test_list_of_token_ids)
+print(X_train)
+print(X_test)
 
 get_model_func = lambda: get_model(embedding_matrix, config.sentences_length)
 
 print("Starting to train model...")
 model = train_model(get_model_func(), config.batch_size, X_train, y_train, X_test, y_test)
+
 
